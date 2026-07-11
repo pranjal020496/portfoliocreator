@@ -1,0 +1,2 @@
+To replace the hero image, add profile_photo.png or profile_photo.jpg here.
+Recommended: professional headshot, square or portrait, 900 px or higher.
