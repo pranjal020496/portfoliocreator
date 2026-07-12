@@ -9,6 +9,6 @@ jobs:
   ping:
     runs-on: ubuntu-latest
     steps:
-      - name: Ping Streamlit app
+      - name: Ping Streamlit health endpoint
         run: |
-          curl -L --max-time 60 "https://pranjalnandi.streamlit.app/"
+          curl --fail --silent --show-error --max-time 60 "https://pranjalnandi.streamlit.app/_stcore/health"
