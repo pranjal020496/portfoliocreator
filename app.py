@@ -1028,7 +1028,7 @@ div[data-testid="stDownloadButton"] button:hover, div[data-testid="stLinkButton"
     font-weight: 800;
     backdrop-filter: blur(8px);
 }
-.project-reel-shell:hover .project-reel-track { animation-play-state: paused; }
+
 @keyframes project-reel-scroll {
     from { transform: translateX(0); }
     to { transform: translateX(-50%); }
