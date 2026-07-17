@@ -31,6 +31,105 @@ ASTRO_MODEL = "https://raw.githubusercontent.com/pranjal020496/Astrospectra-ml/m
 ASTRO_ANOMALY = "https://raw.githubusercontent.com/pranjal020496/Astrospectra-ml/main/docs/screenshots/anomaly_detection.png"
 
 
+
+# PROJECT_SHOWCASE_UPDATE_START
+RISKAUDIT_REPO = "https://github.com/pranjal020496/riskaudit-sme-credit-validation"
+GRIDSHOCK_REPO = "https://github.com/pranjal020496/gridshock-energy-credit-stress-testing"
+SIGNALCOVER_REPO = "https://github.com/pranjal020496/signalcover-telecom-outage-insurance"
+RETAILPULSE_REPO = "https://github.com/pranjal020496/Retailpulse_sql"
+
+DATA_PROJECTS = [
+    {
+        "name": "RiskAudit — SME Credit Model Validation",
+        "repo": RISKAUDIT_REPO,
+        "question": "Can a bank trust its SME probability-of-default model?",
+        "solution": (
+            "Independently validates a logistic regression credit-risk model against a "
+            "decision-tree challenger, testing calibration, stability, sector performance "
+            "and stress sensitivity before reaching an approval decision."
+        ),
+    },
+    {
+        "name": "GridShock — Energy-to-Credit Stress Testing",
+        "repo": GRIDSHOCK_REPO,
+        "question": (
+            "How would a prolonged energy-price shock affect SME cash flow and a bank's credit losses?"
+        ),
+        "solution": (
+            "Forecasts electricity prices, translates energy, interest-rate and demand shocks "
+            "into borrower cash flow and default risk, and estimates portfolio losses through "
+            "correlated Monte Carlo simulation."
+        ),
+    },
+    {
+        "name": "SignalCover — Telecom Outage Insurance Modelling",
+        "repo": SIGNALCOVER_REPO,
+        "question": (
+            "Can broadband performance data detect genuine interruptions and support fair, automatic payouts?"
+        ),
+        "solution": (
+            "Compares outage-detection methods and connects the selected trigger to customer "
+            "segmentation, insurance pricing, basis-risk measurement and simulated portfolio losses."
+        ),
+    },
+    {
+        "name": "Sugar Belly — Public-Health Forecasting",
+        "repo": SUGARBELLY_REPO,
+        "question": (
+            "How might obesity levels change by 2030 under different sugar-availability scenarios?"
+        ),
+        "solution": (
+            "Combines WHO and FAOSTAT data, standardises country-year records, benchmarks predictive "
+            "models and presents historical trends and future scenarios in an interactive dashboard."
+        ),
+    },
+    {
+        "name": "AstroSpectra ML Workbench",
+        "repo": ASTROSPECTRA_REPO,
+        "question": (
+            "Can astronomical spectra be classified reliably while also identifying unusual observations?"
+        ),
+        "solution": (
+            "Processes SDSS FITS spectra onto a common wavelength grid, compares classical models "
+            "with a neural network and adds anomaly detection for researcher review."
+        ),
+    },
+    {
+        "name": "RetailPulse — SQL Commerce Analytics",
+        "repo": RETAILPULSE_REPO,
+        "question": (
+            "How can raw e-commerce transactions be converted into reliable business metrics?"
+        ),
+        "solution": (
+            "Builds a PostgreSQL analytical layer with relational modelling, automated quality checks, "
+            "reusable views, indexes, CTEs and window functions for customer, product and revenue analysis."
+        ),
+    },
+
+]
+
+PROJECT_REEL_IMAGES = [
+    ("local", "riskaudit-executive.png", "RiskAudit — Executive validation"),
+    ("local", "gridshock-scenario-losses.png", "GridShock — Scenario losses"),
+    ("local", "signalcover-detection.png", "SignalCover — Outage detection"),
+    ("local", "sugarbelly_dashboard_overview.png", "Sugar Belly — Executive overview"),
+    ("remote", ASTRO_MODEL, "AstroSpectra — Model comparison"),
+    ("local", "riskaudit-calibration.png", "RiskAudit — Calibration"),
+    ("local", "gridshock-energy-fan.png", "GridShock — Energy simulation"),
+    ("local", "signalcover-basis-risk.png", "SignalCover — Basis risk"),
+    (
+        "local",
+        "sugarbelly_ml_sugar_sensitivity_forecast.png",
+        "Sugar Belly — 2030 scenarios",
+    ),
+    ("remote", ASTRO_ANOMALY, "AstroSpectra — Anomaly detection"),
+    ("local", "riskaudit-scenarios.png", "RiskAudit — Stress scenarios"),
+    ("local", "gridshock-sector-losses.png", "GridShock — Sector concentration"),
+    ("local", "signalcover-loss-distribution.png", "SignalCover — Loss distribution"),
+    ("local", "signalcover-sector-risk.png", "SignalCover — Sector risk"),
+]
+# PROJECT_SHOWCASE_UPDATE_DATA_END
+
 def html(markup: str) -> None:
     st.html(textwrap.dedent(markup).strip())
 
@@ -89,6 +188,66 @@ def screenshot_carousel(slides: list[tuple[str, str, str]]) -> str:
     </div>
     '''
 
+
+
+
+def project_summary_cards(projects: list[dict[str, str]]) -> str:
+    cards = []
+    for number, project in enumerate(projects, start=1):
+        cards.append(
+            f"""
+            <article class="project-summary-card">
+                <div class="project-summary-head">
+                    <div class="project-summary-title">
+                        <span>{number:02d}</span>
+                        <h3>{project["name"]}</h3>
+                    </div>
+                    <a
+                        class="project-github-link"
+                        href="{project["repo"]}"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        GitHub ↗
+                    </a>
+                </div>
+                <div class="project-detail">
+                    <div class="project-detail-label">Business question</div>
+                    <p class="project-business-question">{project["question"]}</p>
+                </div>
+                <div class="project-detail">
+                    <div class="project-detail-label">How it solves it</div>
+                    <p class="project-solution">{project["solution"]}</p>
+                </div>
+            </article>
+            """
+        )
+    return "\n".join(cards)
+
+
+def project_screenshot_reel(images: list[tuple[str, str, str]]) -> str:
+    cards = []
+    for image_type, value, title in images:
+        image_html = local_img(value, title) if image_type == "local" else remote_img(value, title)
+        cards.append(
+            f"""
+            <figure class="project-reel-card">
+                {image_html}
+                <figcaption class="project-reel-label">{title}</figcaption>
+            </figure>
+            """
+        )
+
+    card_html = "\n".join(cards)
+    return f"""
+    <div class="project-reel-shell" aria-label="Selected project screenshots">
+        <div class="project-reel-track">
+            <div class="project-reel-group">{card_html}</div>
+            <div class="project-reel-group" aria-hidden="true">{card_html}</div>
+        </div>
+    </div>
+    """
+# PROJECT_SHOWCASE_UPDATE_HELPERS_END
 
 def achievement_photo(filename: str, label: str) -> str:
     for ext in [".jpg", ".jpeg", ".png", ".webp"]:
@@ -231,7 +390,19 @@ html, body, [class*="css"] { font-family: Inter, system-ui, -apple-system, Blink
 .nav-inner a:hover { color: var(--blue-dark) !important; background: var(--soft); border-color: var(--line); }
 .nav-inner a.external { color: var(--blue-dark) !important; border-color: #BFDBFE; background: #EFF6FF; }
 
-.hero { min-height: 90vh; display: grid; grid-template-columns: minmax(260px, 390px) minmax(0, 1150px); gap: clamp(2rem, 5vw, 5rem); align-items: center; justify-content: center; padding: 0 0 clamp(1rem, 2vw, 2rem); margin: 0 auto; }
+.hero {
+  min-height: auto;
+  display: grid;
+  grid-template-columns: minmax(260px, 390px) minmax(0, 1150px);
+
+  column-gap: clamp(2rem, 5vw, 5rem);
+  row-gap: 1rem;
+
+  align-items: center;
+  justify-content: center;
+  padding: clamp(1rem, 3vw, 2rem) 0 1rem;
+  margin: 0 auto;
+}
 .hero-copy { text-align: left; }
      
 .hero-photo {
@@ -342,7 +513,7 @@ html, body, [class*="css"] { font-family: Inter, system-ui, -apple-system, Blink
 .degree-card b { display: block; color: var(--navy); line-height: 1.15; }
 .degree-card span { display: block; color: var(--muted); font-size: .88rem; margin-top: .22rem; line-height: 1.25; }
 
-.expertise-panel {margin-top: -8rem; padding: clamp(3rem, 4vw, 6rem) 0 clamp(2.5rem, 5vw, 4.5rem); }
+.expertise-panel {margin-top: auto; padding: clamp(3rem, 4vw, 6rem) 0 clamp(2.5rem, 5vw, 4.5rem); }
 .expertise-title { text-align: center; max-width: 1200px; margin: 0 auto 1.5rem; }
 
 .expertise-title h2 { color: var(--navy); font-size: clamp(2rem, 4vw, 4.2rem); letter-spacing: -.04em; line-height: .95; margin: 0 0 .65rem; }
@@ -729,6 +900,150 @@ div[data-testid="stDownloadButton"] button:hover, div[data-testid="stLinkButton"
   .hero-title { white-space: normal; }
   .role { width: 100%; }
 }
+
+/* PROJECT_SHOWCASE_UPDATE_CSS_START */
+.project-summary-grid {
+    width: min(100%, 1500px);
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.25rem;
+}
+.project-summary-card {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 26px;
+    padding: clamp(1.25rem, 2vw, 1.8rem);
+    box-shadow: 0 18px 48px rgba(15, 23, 42, 0.06);
+    text-align: left;
+}
+.project-summary-head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-bottom: 1rem;
+    margin-bottom: 1.1rem;
+    border-bottom: 1px solid var(--line);
+}
+.project-summary-title { display: flex; align-items: flex-start; gap: 0.7rem; }
+.project-summary-title > span {
+    color: #94a3b8;
+    font-size: 0.9rem;
+    font-weight: 900;
+    padding-top: 0.2rem;
+}
+.project-summary-head h3 {
+    margin: 0;
+    color: var(--blue-dark);
+    font-size: clamp(1.35rem, 2vw, 2rem);
+    line-height: 1.15;
+    letter-spacing: -0.025em;
+}
+.project-github-link {
+    flex: 0 0 auto;
+    text-decoration: none !important;
+    color: white !important;
+    background: linear-gradient(135deg, var(--navy), var(--blue-dark));
+    border-radius: 999px;
+    padding: 0.7rem 1rem;
+    font-size: 0.9rem;
+    font-weight: 800;
+}
+.project-detail + .project-detail { margin-top: 1rem; }
+.project-detail-label {
+    margin-bottom: 0.35rem;
+    color: #64748b;
+    font-size: 0.72rem;
+    font-weight: 900;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+.project-business-question {
+    margin: 0 !important;
+    color: var(--navy) !important;
+    font-size: 1.08rem !important;
+    font-weight: 800;
+    line-height: 1.5 !important;
+}
+.project-solution {
+    margin: 0 !important;
+    color: var(--muted) !important;
+    font-size: 1rem !important;
+    line-height: 1.65 !important;
+}
+.project-showcase-heading {  grid-column: 1 / -1; width: 100%; margin: 4.5rem 0 1.4rem; text-align: center; }
+.project-showcase-heading h3 {
+    margin: 0 0 0.45rem;
+    color: var(--navy);
+    font-size: clamp(1.8rem, 3vw, 3rem);
+}
+.project-showcase-heading p { margin: 0; color: var(--muted); }
+.project-reel-shell {
+    grid-column: 1 / -1;
+    justify-self: stretch;
+    
+
+    width: 100vw;
+    max-width: 100%;
+    margin: 0 auto;
+    overflow: hidden;
+    padding: 1rem 0 1.8rem;
+}
+.project-reel-track {
+    display: flex;
+    width: max-content;
+    animation: project-reel-scroll 68s linear infinite;
+    will-change: transform;
+}
+.project-reel-group { display: flex; gap: 1.15rem; padding-right: 1.15rem; }
+.project-reel-card {
+    position: relative;
+    flex: 0 0 clamp(320px, 40vw, 680px);
+    aspect-ratio: 16 / 9;
+    margin: 0;
+    overflow: hidden;
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: 22px;
+    box-shadow: 0 18px 48px rgba(15, 23, 42, 0.1);
+}
+.project-reel-card .screenshot-img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: contain;
+    background: #f8fafc;
+}
+.project-reel-label {
+    position: absolute;
+    left: 0.85rem;
+    bottom: 0.85rem;
+    max-width: calc(100% - 1.7rem);
+    padding: 0.55rem 0.8rem;
+    color: white;
+    background: rgba(11, 18, 32, 0.86);
+    border-radius: 999px;
+    font-size: 0.85rem;
+    font-weight: 800;
+    backdrop-filter: blur(8px);
+}
+.project-reel-shell:hover .project-reel-track { animation-play-state: paused; }
+@keyframes project-reel-scroll {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+}
+@media (max-width: 850px) {
+    .project-summary-grid { grid-template-columns: 1fr; }
+    .project-summary-head { flex-direction: column; }
+    .project-reel-card { flex-basis: 82vw; }
+}
+@media (prefers-reduced-motion: reduce) {
+    .project-reel-track { animation: none; }
+    .project-reel-shell { overflow-x: auto; }
+}
+/* PROJECT_SHOWCASE_UPDATE_CSS_END */
+
 </style>
 """)
 
@@ -776,17 +1091,23 @@ html(f"""
       <p class="intro-text">
         A multidisciplinary profile with 4+ years of data analysis at the intersection of artificial intelligence, machine learning, high-performance computing and materials research. 
       </p>
-
     </div>
+    <div class="project-showcase-heading">
+          
+        </div>
+        {project_screenshot_reel(PROJECT_REEL_IMAGES)}
   </section>
 
+  
+
+  
   <section class="expertise-panel">
     <div class="expertise-title">
       <h2>I specialise in the following areas</h2>
     </div>
 
     <div class="choice-grid">
-      <a class="choice" href="#projects"><div><h3>Data, ML & AI Projects</h3><p>Project screenshots, GitHub links, architecture, reasoning and practical impact.</p></div><div class="open-link">Explore →</div></a>
+      <a class="choice" href="#projects"><div><h3>Data, ML & AI Projects</h3><p>Business questions, concise analytical solutions and selected project previews.</p></div><div class="open-link">Explore →</div></a>
       <a class="choice" href="#hpc"><div><h3>High Performance Computing</h3><p>Batch jobs, Linux/SLURM, simulation workflows and reproducibility.</p></div><div class="open-link">Explore →</div></a>
       <a class="choice" href="#materials"><div><h3>Materials Science Data Simulation</h3><p>Research projects, chapter downloads and scientific methods.</p></div><div class="open-link">Explore →</div></a>
       
@@ -810,62 +1131,19 @@ html(f"""
 # Projects
 html(f"""
 <section class="branch" id="projects">
-  <div class="branch-head">
-    
-    <h2>Data, ML & AI Projects</h2>
-    
-  </div>
-
-  <div class="branch-content">
-    <article class="project-case">
-      <div class="project-topline">
-        <h3>1. Sugar Belly</h3>
-        <div class="project-links"><a class="primary" href="{SUGARBELLY_REPO}" target="_blank">Github Link</a></div>
-      </div>
-      <p>A public-health analytics and machine-learning platform connecting WHO obesity estimates with FAOSTAT sugar availability data. It demonstrates the full path from raw public data to SQL-backed analytics, model benchmarking, scenario forecasting and a Streamlit decision-support dashboard.</p>
-      <div class="tag-row"><span class="tag">Python</span><span class="tag">SQL</span><span class="tag">PostgreSQL</span><span class="tag">Streamlit</span><span class="tag">Plotly</span><span class="tag">scikit-learn</span></div>
-      <div class="workflow-title"><h4>How it works</h4></div>
-      <div class="flow">
-        <div class="step"><b>1. Data</b><span>WHO obesity + FAOSTAT sugar availability.</span></div><div class="step"><b>2. Cleaning</b><span>Country-year alignment, ISO fields and units.</span></div><div class="step"><b>3. SQL</b><span>PostgreSQL tables and analytical views.</span></div><div class="step"><b>4. ML</b><span>Feature engineering and model benchmarking.</span></div><div class="step"><b>5. Dashboard</b><span>KPI cards, maps, trends and rankings.</span></div><div class="step"><b>6. Scenario</b><span>2030 sugar-sensitivity forecasts.</span></div>
-      </div>
-      <div class="card-grid"><div class="card"><h4>Why it is useful</h4><p>It turns separate public-health and nutrition datasets into one exploration product, so users can compare obesity, sugar availability, regions and future scenarios in one place.</p></div><div class="card"><h4>What it proves</h4><p>It shows data ingestion, cleaning, SQL design, feature engineering, ML evaluation, dashboard design and product-level documentation.</p></div></div>
-      <div class="screenshot-title"><h4>Screenshots</h4></div>
-      {screenshot_carousel([
-        (local_img("sugarbelly_dashboard_overview.png", "Sugar Belly dashboard overview"), "Executive overview", "Clear public-health framing, metrics and portfolio positioning."),
-        (local_img("sugarbelly_global_overview.png", "Sugar Belly global analytics"), "Global analytics", "Maps and comparisons for obesity and sugar availability."),
-        (local_img("sugarbelly_ml_sugar_sensitivity_forecast.png", "Sugar Belly ML forecast"), "ML scenario forecast", "Scenario-based 2030 forecasts under sugar-availability assumptions."),
-      ])}
-      <div class="center-button"><div class="project-links"><a class="primary" href="{SUGARBELLY_REPO}" target="_blank">View Sugar Belly on GitHub</a></div></div>
-    </article>
-
-    <article class="project-case">
-      <div class="project-topline"><h3>2. AstroSpectra ML Workbench</h3><div class="project-links"><a class="primary" href="{ASTROSPECTRA_REPO}" target="_blank">Github Link</a></div></div>
-      <p>An end-to-end machine-learning app for SDSS astronomical spectra: FITS ingestion, preprocessing onto a common wavelength grid, classifier comparison, anomaly detection and an interactive Streamlit dashboard.</p>
-      <div class="tag-row"><span class="tag">Astropy</span><span class="tag">FITS</span><span class="tag">scikit-learn</span><span class="tag">PyTorch</span><span class="tag">Streamlit</span><span class="tag">pytest</span></div>
-      <div class="workflow-title"><h4>How it works</h4></div>
-      <div class="flow five"><div class="step"><b>1. FITS</b><span>Load SDSS spectra for STAR, GALAXY and QSO classes.</span></div><div class="step"><b>2. Signal</b><span>Preprocess spectra to 2048 standardized flux values.</span></div><div class="step"><b>3. Models</b><span>Train logistic regression, random forest and CNN.</span></div><div class="step"><b>4. Evaluate</b><span>Compare accuracy, F1, mistakes and confidence.</span></div><div class="step"><b>5. Inspect</b><span>Detect unusual spectra and review anomalies interactively.</span></div></div>
-      <div class="card-grid"><div class="card"><h4>Why it is useful</h4><p>It turns astronomical spectra analysis into a reproducible, inspectable ML workflow rather than a one-off script.</p></div><div class="card"><h4>What it proves</h4><p>It connects scientific data handling, ML benchmarking, anomaly detection, testing and interactive dashboarding.</p></div></div>
-      <div class="screenshot-title"><h4>Screenshots</h4></div>
-      {screenshot_carousel([
-        (remote_img(ASTRO_OVERVIEW, "AstroSpectra overview"), "Dataset overview", "150 spectra, three classes and wavelength-grid summary."),
-        (remote_img(ASTRO_MODEL, "AstroSpectra model comparison"), "Model comparison", "Classical models compared against the CNN on the same split."),
-        (remote_img(ASTRO_ANOMALY, "AstroSpectra anomaly detection"), "Anomaly detection", "Unusual spectra surfaced for researcher inspection."),
-      ])}
-      <div class="center-button"><div class="project-links"><a class="primary" href="{ASTROSPECTRA_REPO}" target="_blank">View AstroSpectra on GitHub</a></div></div>
-    </article>
-
-    <article class="project-case">
-      <div class="project-topline"><h3>3. AI Document Summarising Assistant</h3><div class="project-links"><a class="primary" href="{DOC_ASSISTANT_REPO}" target="_blank">Github Link</a></div></div>
-      <p>PDF question-answering app where users upload a document, ask questions and receive grounded answers with page-level source references.</p>
-      <div class="tag-row"><span class="tag">Python</span><span class="tag">Streamlit</span><span class="tag">PDF extraction</span><span class="tag">TF-IDF</span><span class="tag">Cosine similarity</span><span class="tag">LLM API</span></div>
-      <div class="workflow-title"><h4>How it works</h4></div>
-      <div class="flow four"><div class="step"><b>1. Upload</b><span>User uploads a PDF.</span></div><div class="step"><b>2. Chunk</b><span>Text is extracted and chunked.</span></div><div class="step"><b>3. Retrieve</b><span>Relevant pages are found.</span></div><div class="step"><b>4. Answer</b><span>AI answer is grounded in sources.</span></div></div>
-      <div class="card-grid"><div class="card"><h4>Why it is useful</h4><p>It helps users navigate long PDFs quickly while keeping answers tied to source pages.</p></div><div class="card"><h4>What it proves</h4><p>It shows product thinking around document AI, retrieval, user interaction and explainable answers.</p></div></div>
-      <div class="center-button"><div class="project-links"><a class="primary" href="{DOC_ASSISTANT_REPO}" target="_blank">View Document Assistant on GitHub</a></div></div>
-    </article>
-
-
-  </div>
+    <div class="branch-head">
+        <h2>Data, ML & Quantitative Projects</h2>
+        <p>
+            Selected projects framed around the question they address and the
+            analytical approach used to solve it.
+        </p>
+    </div>
+    <div class="branch-content">
+        <div class="project-summary-grid">
+            {project_summary_cards(DATA_PROJECTS)}
+        </div>
+        
+    </div>
 </section>
 """)
 
