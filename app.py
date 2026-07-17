@@ -40,7 +40,7 @@ RETAILPULSE_REPO = "https://github.com/pranjal020496/Retailpulse_sql"
 
 DATA_PROJECTS = [
     {
-        "name": "RiskAudit — SME Credit Model Validation",
+        "name": "RiskAudit : SME Credit Model Validation",
         "repo": RISKAUDIT_REPO,
         "question": "Can a bank trust its SME probability-of-default model?",
         "solution": (
@@ -50,7 +50,7 @@ DATA_PROJECTS = [
         ),
     },
     {
-        "name": "GridShock — Energy-to-Credit Stress Testing",
+        "name": "GridShock : Energy-to-Credit Stress Testing",
         "repo": GRIDSHOCK_REPO,
         "question": (
             "How would a prolonged energy-price shock affect SME cash flow and a bank's credit losses?"
@@ -62,7 +62,7 @@ DATA_PROJECTS = [
         ),
     },
     {
-        "name": "SignalCover — Telecom Outage Insurance Modelling",
+        "name": "SignalCover : Telecom Outage Insurance Modelling",
         "repo": SIGNALCOVER_REPO,
         "question": (
             "Can broadband performance data detect genuine interruptions and support fair, automatic payouts?"
@@ -73,7 +73,7 @@ DATA_PROJECTS = [
         ),
     },
     {
-        "name": "Sugar Belly — Public-Health Forecasting",
+        "name": "Sugar Belly : Public-Health Forecasting",
         "repo": SUGARBELLY_REPO,
         "question": (
             "How might obesity levels change by 2030 under different sugar-availability scenarios?"
@@ -95,7 +95,7 @@ DATA_PROJECTS = [
         ),
     },
     {
-        "name": "RetailPulse — SQL Commerce Analytics",
+        "name": "RetailPulse : SQL Commerce Analytics",
         "repo": RETAILPULSE_REPO,
         "question": (
             "How can raw e-commerce transactions be converted into reliable business metrics?"
